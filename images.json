@@ -1,0 +1,24 @@
+{
+  "garden of words": [
+    "assets/images/garden of words/GOW1.jpg",
+    "assets/images/garden of words/GOW2.jpg",
+    "assets/images/garden of words/GOW3.jpg"
+  ],
+  "suzume": [
+    "assets/images/suzume/SZM1.jpeg",
+    "assets/images/suzume/SZM2.jpg",
+    "assets/images/suzume/SZM3.jpg",
+    "assets/images/suzume/SZM4.jpg"
+  ],
+  "weathering with you": [
+    "assets/images/weathering with you/WWY1.jpeg",
+    "assets/images/weathering with you/WWY2.png",
+    "assets/images/weathering with you/WWY3.jpg",
+    "assets/images/weathering with you/WWY4.png"
+  ],
+  "your name": [
+    "assets/images/your name/YN1.jpg",
+    "assets/images/your name/YN2.jpg",
+    "assets/images/your name/YN3.jpg"
+  ]
+}

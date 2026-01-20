@@ -1,0 +1,181 @@
+:root {
+  --app-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  --dim-alpha: 0.25;
+  --bg-blur: 0px;
+  --bg-scale: 1;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--app-font);
+}
+
+#bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+
+  background: center / cover no-repeat;
+  filter: blur(var(--bg-blur));
+  transform: scale(var(--bg-scale));
+  transform-origin: center;
+}
+
+#dim {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+
+  background: rgba(0, 0, 0, var(--dim-alpha));
+  pointer-events: none;
+}
+
+#clock {
+  position: fixed;
+  z-index: 2;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: min(500px, 80vw);
+  padding: 16px 18px;
+  border-radius: 18px;
+
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-weight: 600;
+
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+#timeRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  width: 340px;
+}
+
+#time {
+  font-size: 100px;
+  letter-spacing: 1.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+#ampm {
+  margin-left: 12px;
+  font-size: 40px;
+}
+
+#date {
+  margin-top: 3px;
+  font-size: 22px;
+  font-weight: 400;
+  opacity: 0.95;
+}
+
+#searchForm {
+  position: fixed;
+  z-index: 2;
+  top: calc(40% + 130px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: min(700px, 88vw);
+  display: flex;
+  justify-content: center;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 16px;
+  border: 0;
+  outline: none;
+
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  caret-color: #fff;
+
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+
+#searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+#settingsBtn {
+  position: fixed;
+  z-index: 2;
+  top: 18px;
+  right: 18px;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#settingsPanel {
+  position: fixed;
+  z-index: 2;
+  top: 72px;
+  right: 18px;
+
+  width: 280px;
+  padding: 14px;
+  border-radius: 16px;
+
+  background: rgba(0, 0, 0, 0.20);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+#settingsPanel input[type="range"] {
+  width: 100%;
+  accent-color: #7c3aed;
+}
+
+.settingsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.settingsTitle {
+  font-weight: 600;
+}
+
+#settingsClose {
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.settingRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.settingRow label {
+  font-size: 14px;
+  opacity: 0.95;
+}
