@@ -3,5 +3,8 @@
   "private": true,
   "scripts": {
     "build": "node tools/genImage.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
   }
 }

@@ -1,15 +1,14 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="newtab.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>New Tab</title>
+    <link rel="stylesheet" href="newtab.css" />
   </head>
 
   <body>
     <div id="bg"></div>
-
     <div id="dim"></div>
 
     <div id="clock">
@@ -20,30 +19,44 @@
       <div id="date"></div>
     </div>
 
-  <form id="searchForm" action="https://www.google.com/search" method="GET">
-    <input id="searchInput" name="q" type="text" placeholder="Google Search" autocomplete="off" />
-  </form>
+    <form
+      id="searchForm"
+      action="https://www.google.com/search"
+      method="get"
+      autocomplete="on"
+    >
+      <input
+        id="searchInput"
+        name="q"
+        type="search"
+        placeholder="Search Google"
+        autocomplete="on"
+        spellcheck="false"
+        autofocus
+      />
+    </form>
 
-  <button id="settingsBtn" aria-label="Settings" title="Settings">⚙</button>
+    <button id="settingsBtn" type="button" aria-label="Settings" title="Settings">
+      ⚙
+    </button>
 
-  <div id="settingsPanel" hidden>
-    <div class="settingsHeader">
-      <div class="settingsTitle">Settings</div>
-      <button id="settingsClose" aria-label="Close">✕</button>
+    <div id="settingsPanel" hidden>
+      <div class="settingsHeader">
+        <div class="settingsTitle">Settings</div>
+        <button id="settingsClose" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <div class="settingRow">
+        <label for="dimSlider">Brightness <span id="dimLabel">5</span>/10</label>
+        <input id="dimSlider" type="range" min="0" max="10" step="1" value="5" />
+      </div>
+
+      <div class="settingRow">
+        <label for="blurSlider">Background Blur <span id="blurLabel">0</span>/10</label>
+        <input id="blurSlider" type="range" min="0" max="10" step="1" value="0" />
+      </div>
     </div>
 
-    <div class="settingRow">
-      <label for="dimSlider">Brightness <span id="dimLabel">5</span>/10</label>
-      <input id="dimSlider" type="range" min="0" max="10" step="1" value="5" />
-    </div>
-
-    <div class="settingRow">
-      <label for="blurSlider">Background Blur <span id="blurLabel">0</span>/10</label>
-      <input id="blurSlider" type="range" min="0" max="10" step="1" value="0" />
-    </div>
-  </div>
-
-    <script src="newtab.js"></script>
+    <script type="module" src="./newtab.js"></script>
   </body>
-
 </html>

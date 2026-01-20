@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "lw wallpaper",
-  "version": "1.0.0",
-  "description": "makoto films wallpaper, desgined by Lukas Wong",
+  "name": "Makoto Shinkai Browser - Your Name, Suzume, Weathering with you...",
+  "version": "1.0.1",
+  "description": "Google Chrome browser wallpaper's for some of Makoto Shinkai's best films",
   "chrome_url_overrides": { "newtab": "src/newtab.html" },
   "permissions": ["storage"]
 }

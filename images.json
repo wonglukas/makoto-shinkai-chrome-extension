@@ -1,24 +1,24 @@
 {
   "garden of words": [
-    "assets/images/garden of words/GOW1.jpg",
-    "assets/images/garden of words/GOW2.jpg",
-    "assets/images/garden of words/GOW3.jpg"
+    "assets/images/garden of words/GOW1.webp",
+    "assets/images/garden of words/GOW2.webp",
+    "assets/images/garden of words/GOW3.webp"
   ],
   "suzume": [
-    "assets/images/suzume/SZM1.jpeg",
-    "assets/images/suzume/SZM2.jpg",
-    "assets/images/suzume/SZM3.jpg",
-    "assets/images/suzume/SZM4.jpg"
+    "assets/images/suzume/SZM1.webp",
+    "assets/images/suzume/SZM2.webp",
+    "assets/images/suzume/SZM3.webp",
+    "assets/images/suzume/SZM4.webp"
   ],
   "weathering with you": [
-    "assets/images/weathering with you/WWY1.jpeg",
-    "assets/images/weathering with you/WWY2.png",
-    "assets/images/weathering with you/WWY3.jpg",
-    "assets/images/weathering with you/WWY4.png"
+    "assets/images/weathering with you/WWY1.webp",
+    "assets/images/weathering with you/WWY2.webp",
+    "assets/images/weathering with you/WWY3.webp",
+    "assets/images/weathering with you/WWY4.webp"
   ],
   "your name": [
-    "assets/images/your name/YN1.jpg",
-    "assets/images/your name/YN2.jpg",
-    "assets/images/your name/YN3.jpg"
+    "assets/images/your name/YN1.webp",
+    "assets/images/your name/YN2.webp",
+    "assets/images/your name/YN3.webp"
   ]
 }
