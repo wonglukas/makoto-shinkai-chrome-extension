@@ -47,7 +47,7 @@
       </div>
 
       <div class="settingRow">
-        <label for="dimSlider">Brightness <span id="dimLabel">5</span>/10</label>
+        <label for="dimSlider">Dim <span id="dimLabel">5</span>/10</label>
         <input id="dimSlider" type="range" min="0" max="10" step="1" value="5" />
       </div>
 
@@ -55,8 +55,23 @@
         <label for="blurSlider">Background Blur <span id="blurLabel">0</span>/10</label>
         <input id="blurSlider" type="range" min="0" max="10" step="1" value="0" />
       </div>
+
+      <a
+        id="creditLink"
+        href="https://www.cwfilms.jp/en/products/#makotoshinkai"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Makoto Shinkai Film's
+      </a>
+
+      <div class="settingRow">
+        <div class="settingLabel">Wallpapers</div>
+        <div id="folderList" class="folderList"></div>
+      </div>
     </div>
 
     <script type="module" src="./newtab.js"></script>
+    <div id="sourceLabel"></div>
   </body>
 </html>

@@ -179,3 +179,80 @@ html, body {
   font-size: 14px;
   opacity: 0.95;
 }
+
+.settingLabel{
+  font-size: 14px;
+  opacity: 0.95;
+  font-weight: 600;
+}
+
+.folderList{
+  max-height: 170px;
+  overflow: auto;
+  padding: 8px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+.folderItem{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 6px;
+}
+
+.folderItem input{
+  width: 16px;
+  height: 16px;
+}
+
+.folderName{
+  font-size: 13px;
+  opacity: 0.92;
+}
+
+#sourceLabel {
+  position: fixed;
+  right: 16px;
+  bottom: 12px;
+  z-index: 2;
+
+  padding: 6px 10px;
+  border-radius: 12px;
+
+  background: rgba(0, 0, 0, 0.35);
+  color: rgba(255, 255, 255, 0.9);
+
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+
+  user-select: none;
+  pointer-events: none;
+}
+
+#creditLink{
+  display: inline-flex;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+
+  margin: 12px auto 0;
+  padding: 6px 10px;
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #fff;
+
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+#creditLink:hover{
+  background: rgba(255,255,255,0.14);
+}

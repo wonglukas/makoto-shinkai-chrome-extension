@@ -18,5 +18,9 @@ const LAST_FOLDER_KEY = "lastFolder";
   if (!picked) return;
 
   setWallpaper(picked.image);
+
+  const label = document.getElementById("sourceLabel");
+  if (label) label.textContent = picked.folder;
+
   await chrome.storage.local.set({ [LAST_FOLDER_KEY]: picked.folder });
 })();
