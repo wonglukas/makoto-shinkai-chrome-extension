@@ -1,39 +1,85 @@
+// settings.js
+
 const SETTINGS_KEY = "wallpaperSettings";
 
-function dimLevelToAlpha(level) {
-  const l = Math.max(0, Math.min(10, level));
-  return l * 0.05;
-}
+const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
 
-function blurLevelToPx(level) {
+const dimLevelToAlpha = (level) => clamp(level, 0, 10) * 0.05;
+
+const blurLevelToPx = (level) => {
   const maxPx = 20;
-  const l = Math.max(0, Math.min(10, level));
-  return Math.round((l / 10) * maxPx);
-}
+  return Math.round((clamp(level, 0, 10) / 10) * maxPx);
+};
 
-function blurLevelToScale(level) {
-  const l = Math.max(0, Math.min(10, level));
-  return 1 + (l / 10) * 0.12;
-}
+const blurLevelToScale = (level) => 1 + (clamp(level, 0, 10) / 10) * 0.12;
 
-//apply css changes
 export function applySettings({ dimLevel, blurLevel }) {
-  document.documentElement.style.setProperty("--dim-alpha", String(dimLevelToAlpha(dimLevel)));
-  document.documentElement.style.setProperty("--bg-blur", `${blurLevelToPx(blurLevel)}px`);
-  document.documentElement.style.setProperty("--bg-scale", String(blurLevelToScale(blurLevel)));
+  const root = document.documentElement.style;
+  root.setProperty("--dim-alpha", String(dimLevelToAlpha(dimLevel)));
+  root.setProperty("--bg-blur", `${blurLevelToPx(blurLevel)}px`);
+  root.setProperty("--bg-scale", String(blurLevelToScale(blurLevel)));
 }
 
-// default settings
 export async function loadSettings() {
   const defaults = { dimLevel: 4, blurLevel: 0, selectedFolders: null }; // null => all
-  const data = await chrome.storage.local.get(SETTINGS_KEY);
-  const saved = data[SETTINGS_KEY] || {};
+  const { [SETTINGS_KEY]: saved = {} } = await chrome.storage.local.get(SETTINGS_KEY);
   return { ...defaults, ...saved };
 }
 
-// save settings
 export function saveSettings(settings) {
   return chrome.storage.local.set({ [SETTINGS_KEY]: settings });
+}
+
+export function initSettingsUI(settings) {
+  const btn = document.getElementById("settingsBtn");
+  const panel = document.getElementById("settingsPanel");
+  const close = document.getElementById("settingsClose");
+
+  const dimSlider = document.getElementById("dimSlider");
+  const blurSlider = document.getElementById("blurSlider");
+  const dimLabel = document.getElementById("dimLabel");
+  const blurLabel = document.getElementById("blurLabel");
+
+  if (!btn || !panel || !close || !dimSlider || !blurSlider || !dimLabel || !blurLabel) return;
+
+  const setPanelOpen = (open) => {
+    panel.hidden = !open;
+    btn.setAttribute("aria-expanded", String(open));
+  };
+
+  btn.addEventListener("click", () => setPanelOpen(panel.hidden));
+  close.addEventListener("click", () => setPanelOpen(false));
+
+  const syncUI = ({ dimLevel, blurLevel }) => {
+    dimSlider.value = String(dimLevel);
+    blurSlider.value = String(blurLevel);
+    dimLabel.textContent = String(dimLevel);
+    blurLabel.textContent = String(blurLevel);
+  };
+
+  syncUI(settings);
+
+  let saveTimer;
+  const onInput = () => {
+    const next = {
+      dimLevel: Number(dimSlider.value),
+      blurLevel: Number(blurSlider.value),
+    };
+
+    dimLabel.textContent = String(next.dimLevel);
+    blurLabel.textContent = String(next.blurLevel);
+
+    applySettings(next);
+
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => saveSettings({ ...settings, ...next }), 150);
+  };
+
+  dimSlider.addEventListener("input", onInput);
+  blurSlider.addEventListener("input", onInput);
+
+  // start closed by default (optional)
+  setPanelOpen(false);
 }
 
 export function initWallpapersToggleUI() {
@@ -41,23 +87,26 @@ export function initWallpapersToggleUI() {
   const panel = document.getElementById("wallpapersPanel");
   if (!btn || !panel) return;
 
+  const chev = btn.querySelector(".chev");
+
   const setOpen = (open) => {
     panel.hidden = !open;
     btn.setAttribute("aria-expanded", String(open));
-    const chev = btn.querySelector(".chev");
     if (chev) chev.textContent = open ? "▴" : "▾";
   };
 
-  btn.addEventListener("click", () => setOpen(panel.hidden)); // toggle
-  setOpen(false); // default collapsed
+  btn.addEventListener("click", () => setOpen(panel.hidden));
+  setOpen(false);
 }
 
 export function initFolderPickerUI({ folders, settings, onChange }) {
   const list = document.getElementById("folderList");
   if (!list) return;
 
+  // null => all selected
   const selected = new Set(settings.selectedFolders ?? folders);
-  list.innerHTML = "";
+
+  list.textContent = "";
 
   for (const folder of folders) {
     const row = document.createElement("label");
@@ -75,53 +124,12 @@ export function initFolderPickerUI({ folders, settings, onChange }) {
       if (cb.checked) selected.add(folder);
       else selected.delete(folder);
 
-      const nextSelected =
-        selected.size === folders.length ? null : Array.from(selected);
-
+      // store null if all selected (future-proof when new folders added)
+      const nextSelected = selected.size === folders.length ? null : Array.from(selected);
       onChange?.(nextSelected);
     });
 
     row.append(cb, name);
     list.appendChild(row);
   }
-}
-
-
-export function initSettingsUI(settings) {
-  const btn = document.getElementById("settingsBtn");
-  const panel = document.getElementById("settingsPanel");
-  const close = document.getElementById("settingsClose");
-  const dimSlider = document.getElementById("dimSlider");
-  const blurSlider = document.getElementById("blurSlider");
-  const dimLabel = document.getElementById("dimLabel");
-  const blurLabel = document.getElementById("blurLabel");
-
-  if (!btn || !panel || !close || !dimSlider || !blurSlider || !dimLabel || !blurLabel) return;
-
-  btn.addEventListener("click", () => (panel.hidden = !panel.hidden));
-  close.addEventListener("click", () => (panel.hidden = true));
-
-  dimSlider.value = String(settings.dimLevel);
-  blurSlider.value = String(settings.blurLevel);
-  dimLabel.textContent = String(settings.dimLevel);
-  blurLabel.textContent = String(settings.blurLevel);
-
-  let t;
-  const onChange = () => {
-    const next = {
-      dimLevel: Number(dimSlider.value),
-      blurLevel: Number(blurSlider.value),
-    };
-
-    dimLabel.textContent = String(next.dimLevel);
-    blurLabel.textContent = String(next.blurLevel);
-
-    applySettings(next);
-
-    clearTimeout(t);
-    t = setTimeout(() => saveSettings(next), 150);
-  };
-
-  dimSlider.addEventListener("input", onChange);
-  blurSlider.addEventListener("input", onChange);
 }

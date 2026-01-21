@@ -1,11 +1,13 @@
-// date suffix
-function ordinal(n) {
+// clock.js
+
+const ordinal = (n) => {
   const s = ["th", "st", "nd", "rd"];
   const v = n % 100;
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
-}
+};
 
-// clock
+const pad2 = (n) => String(n).padStart(2, "0");
+
 export function startClock() {
   const timeEl = document.getElementById("time");
   const ampmEl = document.getElementById("ampm");
@@ -17,15 +19,15 @@ export function startClock() {
   const render = () => {
     const d = new Date();
 
-    // 12 hr clock
+    // 12-hour time
     let h = d.getHours();
     const ampm = h >= 12 ? "PM" : "AM";
-    h = h % 12;
-    if (h === 0) h = 12;
+    h = h % 12 || 12;
 
-    const hh = String(h).padStart(2, "0");
-    const mm = String(d.getMinutes()).padStart(2, "0");
+    const hh = pad2(h);
+    const mm = pad2(d.getMinutes());
 
+    // Date text
     const weekday = d.toLocaleDateString(undefined, { weekday: "long" });
     const month = d.toLocaleDateString(undefined, { month: "long" });
     const day = ordinal(d.getDate());
@@ -35,14 +37,11 @@ export function startClock() {
     if (nextText === lastText) return;
     lastText = nextText;
 
-    //time and date 
     timeEl.textContent = `${hh}:${mm}`;
     ampmEl.textContent = ampm;
     dateEl.textContent = `${weekday}, ${month} ${day}, ${year}`;
   };
 
   render();
-  
-  // update every min
-  setInterval(render, 60_000);
+  setInterval(render, 60_000); // update every minute
 }

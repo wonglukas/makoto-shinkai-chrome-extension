@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Makoto Shinkai New Tab - Your Name, Suzume, Weathering with you...",
-  "version": "1.0.1",
-  "description": "Google Chrome new tab wallpaper's for some of Makoto Shinkai's best works",
+  "name": "Makoto Shinkai New Tab Wallpapers - Your Name, Suzume, Weathering With You...",
+  "version": "1.0.3",
+  "description": "Makoto Shinkai New Tab Wallpapers brings a clean, minimalist new tab experience to Chrome with rotating backgrounds from Your Name (Kimi no Na wa), Suzume, Weathering With You, and more.",
   "chrome_url_overrides": { "newtab": "src/newtab.html" },
   "permissions": ["storage"]
 }

@@ -12,24 +12,29 @@ import { loadImagesIndex, pickFolderAndImage, setWallpaper } from "./js/wallpape
 const LAST_FOLDER_KEY = "lastFolder";
 
 (async () => {
+  // Core UI
   startClock();
 
+  const sourceEl = document.getElementById("sourceLabel");
+
+  // Load wallpapers index + folders once
   const index = await loadImagesIndex();
-  const folders = Object.keys(index).filter((f) => (index[f] || []).length > 0);
+  const folders = Object.keys(index).filter((f) => (index[f]?.length ?? 0) > 0);
   if (folders.length === 0) return;
 
+  // Settings
   const settings = await loadSettings();
   applySettings(settings);
   initSettingsUI(settings);
   initWallpapersToggleUI();
 
-  const sourceEl = document.getElementById("sourceLabel");
+  // Restore last folder (avoid repeating)
+  const { [LAST_FOLDER_KEY]: storedLastFolder = null } =
+    await chrome.storage.local.get(LAST_FOLDER_KEY);
+  let lastFolder = storedLastFolder;
 
-  const stored = await chrome.storage.local.get(LAST_FOLDER_KEY);
-  let lastFolder = stored[LAST_FOLDER_KEY] || null;
-
-  const applyWallpaperPick = async (nextSettings = settings) => {
-    const picked = pickFolderAndImage(index, lastFolder, nextSettings.selectedFolders);
+  const applyWallpaperPick = async (activeSettings = settings) => {
+    const picked = pickFolderAndImage(index, lastFolder, activeSettings.selectedFolders);
     if (!picked) return;
 
     setWallpaper(picked.image);
@@ -40,16 +45,17 @@ const LAST_FOLDER_KEY = "lastFolder";
     if (sourceEl) sourceEl.textContent = picked.folder;
   };
 
+  // Folder picker (in settings)
   initFolderPickerUI({
     folders,
     settings,
     onChange: async (nextSelectedFolders) => {
-      const next = { ...settings, selectedFolders: nextSelectedFolders };
       settings.selectedFolders = nextSelectedFolders; // keep local copy in sync
-      await saveSettings(next);
-      await applyWallpaperPick(next);
+      await saveSettings({ ...settings });
+      await applyWallpaperPick(settings);
     },
   });
 
-  await applyWallpaperPick(settings);
+  // Initial wallpaper
+  await applyWallpaperPick();
 })();
