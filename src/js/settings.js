@@ -87,7 +87,7 @@ export function initWallpapersToggleUI() {
   const panel = document.getElementById("wallpapersPanel");
   if (!btn || !panel) return;
 
-  const setOpen = (open) => {
+  const setOpen = (open, { instant = false } = {}) => {
     btn.setAttribute("aria-expanded", String(open));
 
     const chev = btn.querySelector(".chev");
@@ -96,20 +96,35 @@ export function initWallpapersToggleUI() {
     if (open) {
       panel.hidden = false;
       requestAnimationFrame(() => panel.classList.add("is-open"));
-    } else {
-      panel.classList.remove("is-open");
-      const onEnd = (e) => {
-        if (e.propertyName !== "max-height") return;
-        panel.hidden = true;
-        panel.removeEventListener("transitionend", onEnd);
-      };
-      panel.addEventListener("transitionend", onEnd);
+      return;
     }
+
+    // close
+    panel.classList.remove("is-open");
+
+    if (instant) {
+      panel.hidden = true;
+      return;
+    }
+
+    const onEnd = (e) => {
+      if (e.propertyName !== "max-height") return;
+      panel.hidden = true;
+      panel.removeEventListener("transitionend", onEnd);
+    };
+    panel.addEventListener("transitionend", onEnd);
   };
 
-  btn.addEventListener("click", () => setOpen(panel.hidden));
-  setOpen(false);
+  // Toggle using aria-expanded, not panel.hidden
+  btn.addEventListener("click", () => {
+    const isOpen = btn.getAttribute("aria-expanded") === "true";
+    setOpen(!isOpen);
+  });
+
+  // Initial state: force closed instantly
+  setOpen(false, { instant: true });
 }
+
 
 export function initFolderPickerUI({ folders, settings, onChange }) {
   const list = document.getElementById("folderList");
