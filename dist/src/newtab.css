@@ -1,0 +1,425 @@
+:root {
+  --app-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Helvetica Neue", Arial, sans-serif;
+
+  --dim-alpha: 0.25;
+  --bg-blur: 0px;
+  --bg-scale: 1;
+
+  --accent: #7c3aed;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--app-font);
+}
+
+/* =========================
+   BACKGROUND
+   ========================= */
+#bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+
+  background: center / cover no-repeat;
+  filter: blur(var(--bg-blur));
+  transform: scale(var(--bg-scale));
+  transform-origin: center;
+}
+
+#dim {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+
+  background: rgba(0, 0, 0, var(--dim-alpha));
+  pointer-events: none;
+}
+
+/* =========================
+   CLOCK
+   ========================= */
+#clock {
+  position: fixed;
+  z-index: 2;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: min(500px, 80vw);
+  padding: 16px 18px;
+  border-radius: 18px;
+
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-weight: 600;
+
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+#timeRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  width: 340px; /* stable time width */
+}
+
+#time {
+  font-size: 100px;
+  letter-spacing: 1.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+#ampm {
+  margin-left: 12px;
+  font-size: 40px;
+}
+
+#date {
+  margin-top: 3px;
+  font-size: 22px;
+  font-weight: 400;
+  opacity: 0.95;
+}
+
+/* =========================
+   SEARCH
+   ========================= */
+#searchForm {
+  position: fixed;
+  z-index: 2;
+  top: calc(40% + 130px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: min(700px, 88vw);
+  display: flex;
+  justify-content: center;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 16px;
+  border: 0;
+  outline: none;
+
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  caret-color: #fff;
+
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+
+#searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* =========================
+   SETTINGS BUTTON
+   ========================= */
+#settingsBtn {
+  position: fixed;
+  z-index: 2;
+  top: 18px;
+  right: 18px;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* =========================
+   SETTINGS PANEL
+   ========================= */
+#settingsPanel {
+  position: fixed;
+  z-index: 2;
+  top: 72px;
+  right: 18px;
+
+  width: 320px;
+  padding: 14px;
+  border-radius: 18px;
+
+  background: rgba(16, 16, 18, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: #fff;
+
+  backdrop-filter: blur(14px);
+}
+
+/* header */
+.settingsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 2px 10px;
+}
+
+.settingsTitle {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  opacity: 0.95;
+}
+
+#settingsClose {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* sections */
+.settingsSection {
+  padding: 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.settingsSection:first-of-type {
+  border-top: 0;
+  padding-top: 6px;
+}
+
+.sectionTitle {
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.65;
+  letter-spacing: 0.4px;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+/* block container for slider rows */
+.settingBlock {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 10px 10px 12px;
+  margin-bottom: 10px;
+}
+.settingBlock:last-child {
+  margin-bottom: 0;
+}
+
+.settingTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.settingName {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+.settingValue {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.70;
+}
+
+/* slider: modern pill */
+#settingsPanel input[type="range"] {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.20);
+  border-radius: 999px;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  accent-color: var(--accent); /* fallback */
+}
+
+/* WebKit thumb */
+#settingsPanel input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.18);
+}
+
+/* Firefox thumb */
+#settingsPanel input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--accent);
+  border: 0;
+}
+
+.settingRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+.settingRow label,
+.settingLabel {
+  font-size: 14px;
+  opacity: 0.95;
+  font-weight: 600;
+}
+
+/* =========================
+   CREDIT LINK
+   ========================= */
+#creditLink {
+  display: block;
+  text-align: center;
+
+  padding: 10px 12px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: rgba(255, 255, 255, 0.92);
+
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+#creditLink:hover {
+  background: rgba(255, 255, 255, 0.10);
+}
+
+/* =========================
+   WALLPAPER FOLDER PICKER
+   ========================= */
+
+#wallpapersPanel {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  overflow: hidden;
+  transition: max-height 220ms ease, opacity 180ms ease, transform 180ms ease;
+  will-change: max-height, opacity, transform;
+}
+
+#wallpapersPanel.is-open {
+  max-height: 260px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.panelBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px 12px;
+  border-radius: 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.panelBtn .chev {
+  opacity: 0.7;
+  font-size: 12px;
+  transform: translateY(1px);
+}
+
+.subPanel {
+  margin-top: 10px;
+}
+
+.folderList {
+  max-height: 260px;
+  overflow: auto;
+  padding: 8px;
+
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.folderItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.folderItem:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.folderItem input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+
+.folderName {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.92;
+  line-height: 1.2;
+}
+
+/* =========================
+   SOURCE LABEL
+   ========================= */
+#sourceLabel {
+  position: fixed;
+  right: 16px;
+  bottom: 12px;
+  z-index: 2;
+
+  padding: 6px 10px;
+  border-radius: 12px;
+
+  background: rgba(0, 0, 0, 0.35);
+  color: rgba(255, 255, 255, 0.9);
+
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+
+  user-select: none;
+  pointer-events: none;
+}
+
+#sourceLabel:empty {
+  display: none;
+}
