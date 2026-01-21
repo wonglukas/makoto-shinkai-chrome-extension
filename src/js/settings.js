@@ -87,12 +87,24 @@ export function initWallpapersToggleUI() {
   const panel = document.getElementById("wallpapersPanel");
   if (!btn || !panel) return;
 
-  const chev = btn.querySelector(".chev");
-
   const setOpen = (open) => {
-    panel.hidden = !open;
     btn.setAttribute("aria-expanded", String(open));
+
+    const chev = btn.querySelector(".chev");
     if (chev) chev.textContent = open ? "▴" : "▾";
+
+    if (open) {
+      panel.hidden = false;
+      requestAnimationFrame(() => panel.classList.add("is-open"));
+    } else {
+      panel.classList.remove("is-open");
+      const onEnd = (e) => {
+        if (e.propertyName !== "max-height") return;
+        panel.hidden = true;
+        panel.removeEventListener("transitionend", onEnd);
+      };
+      panel.addEventListener("transitionend", onEnd);
+    }
   };
 
   btn.addEventListener("click", () => setOpen(panel.hidden));

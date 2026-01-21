@@ -316,6 +316,22 @@ body {
 /* =========================
    WALLPAPER FOLDER PICKER (collapsible)
    ========================= */
+
+#wallpapersPanel {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  overflow: hidden;
+  transition: max-height 220ms ease, opacity 180ms ease, transform 180ms ease;
+  will-change: max-height, opacity, transform;
+}
+
+#wallpapersPanel.is-open {
+  max-height: 260px; /* adjust to your list height */
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .panelBtn {
   width: 100%;
   display: flex;
