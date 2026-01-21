@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Makoto Shinkai New Tab Wallpapers - Your Name, Suzume, Weathering With You...",
+  "name": "Makoto Shinkai New Tab - Your Name, Suzume, Weathering With You...",
   "version": "1.0.3",
   "description": "Makoto Shinkai New Tab Wallpapers brings a clean, minimalist new tab experience. Show off your favourite Makoto Shinkai Films.",
   "chrome_url_overrides": { "newtab": "src/newtab.html" },
