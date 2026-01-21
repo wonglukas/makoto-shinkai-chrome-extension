@@ -290,7 +290,7 @@ body {
 }
 
 /* =========================
-   CREDIT LINK (compact + uniform)
+   CREDIT LINK
    ========================= */
 #creditLink {
   display: block;
@@ -314,7 +314,7 @@ body {
 }
 
 /* =========================
-   WALLPAPER FOLDER PICKER (collapsible)
+   WALLPAPER FOLDER PICKER
    ========================= */
 
 #wallpapersPanel {
@@ -327,7 +327,7 @@ body {
 }
 
 #wallpapersPanel.is-open {
-  max-height: 260px; /* adjust to your list height */
+  max-height: 260px;
   opacity: 1;
   transform: translateY(0);
 }
