@@ -66,11 +66,17 @@
       </a>
 
       <div class="settingRow">
-        <div class="settingLabel">Wallpapers</div>
-        <div id="folderList" class="folderList"></div>
+        <button id="wallpapersBtn" class="panelBtn" type="button" aria-expanded="false">
+          <span>Background Film Option's</span>
+          <span class="chev">▾</span>
+        </button>
+
+        <div id="wallpapersPanel" class="subPanel" hidden>
+          <div id="folderList" class="folderList"></div>
+        </div>
       </div>
     </div>
-
+    
     <script type="module" src="./newtab.js"></script>
     <div id="sourceLabel"></div>
   </body>

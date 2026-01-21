@@ -36,13 +36,27 @@ export function saveSettings(settings) {
   return chrome.storage.local.set({ [SETTINGS_KEY]: settings });
 }
 
+export function initWallpapersToggleUI() {
+  const btn = document.getElementById("wallpapersBtn");
+  const panel = document.getElementById("wallpapersPanel");
+  if (!btn || !panel) return;
+
+  const setOpen = (open) => {
+    panel.hidden = !open;
+    btn.setAttribute("aria-expanded", String(open));
+    const chev = btn.querySelector(".chev");
+    if (chev) chev.textContent = open ? "▴" : "▾";
+  };
+
+  btn.addEventListener("click", () => setOpen(panel.hidden)); // toggle
+  setOpen(false); // default collapsed
+}
+
 export function initFolderPickerUI({ folders, settings, onChange }) {
   const list = document.getElementById("folderList");
   if (!list) return;
 
-  // If settings.selectedFolders is null => treat as "all selected"
   const selected = new Set(settings.selectedFolders ?? folders);
-
   list.innerHTML = "";
 
   for (const folder of folders) {
@@ -61,15 +75,13 @@ export function initFolderPickerUI({ folders, settings, onChange }) {
       if (cb.checked) selected.add(folder);
       else selected.delete(folder);
 
-      // If user checks everything, store null (lighter + future-proof)
       const nextSelected =
         selected.size === folders.length ? null : Array.from(selected);
 
       onChange?.(nextSelected);
     });
 
-    row.appendChild(cb);
-    row.appendChild(name);
+    row.append(cb, name);
     list.appendChild(row);
   }
 }

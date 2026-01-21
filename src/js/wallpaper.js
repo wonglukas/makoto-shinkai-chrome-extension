@@ -17,9 +17,20 @@ export async function loadImagesIndex() {
 }
 
 // pick different image folder
-export function pickFolderAndImage(index, lastFolder) {
-  const folders = Object.keys(index).filter((f) => (index[f] || []).length > 0);
-  if (folders.length === 0) return null;
+export function pickFolderAndImage(index, lastFolder, selectedFolders) {
+  const allFolders = Object.keys(index).filter(f => (index[f] || []).length > 0);
+  if (allFolders.length === 0) return null;
+
+  const allowedSet = selectedFolders && selectedFolders.length
+    ? new Set(selectedFolders)
+    : null; // null => allow all
+
+  const allowedFolders = allowedSet
+    ? allFolders.filter(f => allowedSet.has(f))
+    : allFolders;
+
+  // If user unchecks everything, fallback to all (or you can show a message)
+  const folders = allowedFolders.length ? allowedFolders : allFolders;
 
   const folder = pickRandomDifferent(folders, lastFolder);
   const images = index[folder];
