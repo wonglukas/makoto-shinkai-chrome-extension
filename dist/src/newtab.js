@@ -8,6 +8,7 @@ import {
   initWallpapersToggleUI,
 } from "./js/settings.js";
 import { loadImagesIndex, pickFolderAndImage, setWallpaper } from "./js/wallpaper.js";
+import { initSearch } from "./js/search.js";
 
 const LAST_FOLDER_KEY = "lastFolder";
 
@@ -27,6 +28,7 @@ const LAST_FOLDER_KEY = "lastFolder";
   applySettings(settings);
   initSettingsUI(settings);
   initWallpapersToggleUI();
+  initSearch();
 
   // Restore last folder (avoid repeating)
   const { [LAST_FOLDER_KEY]: storedLastFolder = null } =

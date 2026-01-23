@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>New Tab</title>
     <link rel="stylesheet" href="newtab.css" />
   </head>
@@ -20,26 +20,43 @@
         <div id="date" aria-label="Date"></div>
       </section>
 
-      <form id="searchForm" action="https://www.google.com/search" method="get">
+      <!-- Search (handled via chrome.search in JS; no action URL) -->
+      <form id="searchForm" role="search" autocomplete="on">
+        <label for="searchInput" class="sr-only">Search the web</label>
         <input
           id="searchInput"
           name="q"
           type="search"
-          placeholder="Search Google"
+          placeholder="Search the web"
           autocomplete="on"
           spellcheck="false"
+          enterkeyhint="search"
+          aria-label="Search the web"
           autofocus
         />
       </form>
 
-      <button id="settingsBtn" type="button" aria-label="Settings" title="Settings">
+      <button
+        id="settingsBtn"
+        type="button"
+        aria-label="Open settings"
+        title="Settings"
+        aria-controls="settingsPanel"
+        aria-expanded="false"
+      >
         ⚙
       </button>
 
-      <aside id="settingsPanel" hidden aria-label="Settings">
+      <aside
+        id="settingsPanel"
+        hidden
+        aria-label="Settings"
+        role="dialog"
+        aria-modal="true"
+      >
         <header class="settingsHeader">
           <h2 class="settingsTitle">Settings</h2>
-          <button id="settingsClose" type="button" aria-label="Close">✕</button>
+          <button id="settingsClose" type="button" aria-label="Close settings">✕</button>
         </header>
 
         <section class="settingsSection" aria-label="Appearance">
@@ -97,6 +114,7 @@
 
     <div id="sourceLabel" aria-live="polite"></div>
 
-    <script type="module" src="./newtab.js"></script>
+    <!-- Import method: load only newtab.js; it imports other modules -->
+    <script type="module" src="newtab.js"></script>
   </body>
 </html>

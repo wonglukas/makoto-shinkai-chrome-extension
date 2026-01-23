@@ -4,7 +4,7 @@
   "version": "1.0.4",
   "description": "Makoto Shinkai Films - New Tab brings a clean, minimalist new tab experience. Show off your favourite Makoto Shinkai Films.",
   "chrome_url_overrides": { "newtab": "src/newtab.html" },
-  "permissions": ["storage"],
+  "permissions": ["storage", "search"],
   "icons": {
     "16": "assets/icons/icon16.png",
     "32": "assets/icons/icon32.png",
